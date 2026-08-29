@@ -17,8 +17,8 @@ jobs:
         with:
           python-version: "3.13"
 
-      - name: Install dependencies
-        run: pip install -r src/requirements.txt
+      - name: Install python-pptx
+        run: pip install python-pptx
 
       - name: Export narration
         run: python src/generate.py slide.md --export-narration
@@ -40,8 +40,8 @@ jobs:
         with:
           python-version: "3.13"
 
-      - name: Install dependencies
-        run: pip install -r src/requirements.txt
+      - name: Install piper-tts
+        run: pip install piper-tts pyopenjtalk
 
       - name: Download Piper voice
         run: python -m piper.download_voices --download-dir src/voices ja_JA-hi_fi_captain-medium
@@ -72,8 +72,8 @@ jobs:
         with:
           python-version: "3.13"
 
-      - name: Install dependencies
-        run: pip install -r src/requirements.txt
+      - name: Install python-pptx
+        run: pip install python-pptx
 
       - name: Download audio
         uses: actions/download-artifact@v8
