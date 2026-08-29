@@ -42,6 +42,21 @@
 GitHub の Actions タブから `generate` ワークフローを `Run workflow` で実行すると、
 `slide.pptx` が更新されてコミットされる。更新されるのはそこだけ。
 
+```mermaid
+flowchart LR
+    subgraph narration [Export narration]
+        n1[Install python-pptx] --> n2[generate.py --export-narration] --> n3[Upload narration]
+    end
+    subgraph synthesize [Synthesize audio]
+        s1[Install piper-tts] --> s2[Download Piper voice] --> s3[Download narration] --> s4[tts.py] --> s5[Upload audio]
+    end
+    subgraph build [Build & commit]
+        b1[Install python-pptx] --> b2[Download audio] --> b3[generate.py] --> b4[git commit] --> b5[git push]
+    end
+    narration -->|artifact: narration| synthesize
+    synthesize -->|artifact: audio| build
+```
+
 ### ローカルで実行する場合
 
 ```bash
