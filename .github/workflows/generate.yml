@@ -1,0 +1,40 @@
+name: generate
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install dependencies
+        run: pip install -r src/requirements.txt
+
+      - name: Download Piper voice
+        run: python -m piper.download_voices --download-dir src/voices ja_JA-hi_fi_captain-medium
+
+      - name: Export narration
+        run: python src/generate.py slide.md --export-narration
+
+      - name: Synthesize narration audio
+        run: python src/tts.py
+
+      - name: Generate slide.pptx
+        run: python src/generate.py slide.md
+
+      - name: Commit slide.pptx and audio
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add slide.pptx src/audio
+          git diff --cached --quiet || git commit -m "Regenerate slide.pptx"
+          git push
