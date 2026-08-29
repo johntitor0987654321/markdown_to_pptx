@@ -40,7 +40,7 @@
 ### GitHub Actions で実行する場合
 
 GitHub の Actions タブから `generate` ワークフローを `Run workflow` で実行すると、
-`slide.pptx` が更新されてコミットされる。更新されるのはそこだけ。
+`slide.pptx` が更新されてコミットされる。更新された`slide.pptx` をダウンロードする。
 
 ```mermaid
 flowchart LR
